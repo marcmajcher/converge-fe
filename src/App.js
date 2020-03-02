@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import GoogleLoginButton from './components/googleLoginButton';
+import UserInfo from './components/userInfo';
 import './App.scss';
-import GoogleLoginButton from './components/google-login-button';
-import UserInfo from './components/UserInfo';
+import axios from 'axios';
 
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);
 
-  useEffect(() => userInfo && console.log(userInfo.profileObj));
+  function handleLogin(token) {
+    console.log('Handling login. Token:', token);
+    axios
+      .post('http://localhost:8000/users', { token })
+      .then(res => console.log('RES', res));
+  }
 
   return (
     <div className="app">
@@ -23,9 +29,10 @@ function App() {
             </li>
             <li className="pure-menu-item">
               <GoogleLoginButton
-                loggedIn={userInfo !== undefined}
+                loggedIn={userInfo}
                 handleLogin={info => {
-                  setUserInfo(info);
+                  handleLogin(info.tokenObj.id_token);
+                  setUserInfo(info.profileObj);
                 }}
                 handleLogout={() => {
                   setUserInfo(undefined);
@@ -38,7 +45,7 @@ function App() {
 
       <div className="content">
         {userInfo ? (
-          <UserInfo userInfo={userInfo.profileObj}></UserInfo>
+          <UserInfo userInfo={userInfo}></UserInfo>
         ) : (
           <div>Log in by clicking the button in the upper right!</div>
         )}
