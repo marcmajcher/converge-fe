@@ -8,10 +8,9 @@ function App() {
   const [userInfo, setUserInfo] = useState(undefined);
 
   function handleLogin(token) {
-    console.log('Handling login. Token:', token);
     axios
       .post('http://localhost:8000/users', { token })
-      .then(res => console.log('RES', res));
+      .then(res => console.log(`Token: ${token}`));
   }
 
   return (
