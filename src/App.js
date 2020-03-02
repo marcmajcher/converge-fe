@@ -1,16 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GoogleLoginButton from './components/googleLoginButton';
 import UserInfo from './components/userInfo';
 import './App.scss';
 import axios from 'axios';
 
+const BASE_URL = 'http://localhost:8000';
+
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);
 
-  function handleLogin(token) {
+  useEffect(() => {
+    const token = localStorage.getItem('t');
+    if (token) {
+      axios
+        .post(`${BASE_URL}/users/verify`, { token })
+        .then(response => {
+          setUserInfo(response.data);
+        })
+        .catch(handleLogout);
+    }
+  }, []);
+
+  function handleLogin(info) {
     axios
-      .post('http://localhost:8000/users', { token })
-      .then(res => console.log(`Token: ${token}`));
+      .post(`${BASE_URL}/users`, {
+        token: info.tokenObj.id_token,
+        userData: info.profileObj,
+      })
+      .then(res => {
+        setUserInfo(info.profileObj);
+        localStorage.setItem('t', res.data.token);
+      });
+  }
+
+  function handleLogout() {
+    setUserInfo(undefined);
+    localStorage.setItem('t', '');
   }
 
   return (
@@ -29,13 +54,8 @@ function App() {
             <li className="pure-menu-item">
               <GoogleLoginButton
                 loggedIn={userInfo}
-                handleLogin={info => {
-                  handleLogin(info.tokenObj.id_token);
-                  setUserInfo(info.profileObj);
-                }}
-                handleLogout={() => {
-                  setUserInfo(undefined);
-                }}
+                handleLogin={handleLogin}
+                handleLogout={handleLogout}
               ></GoogleLoginButton>
             </li>
           </ul>
