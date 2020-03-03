@@ -8,15 +8,13 @@ export default function GoogleLoginButton(props) {
     <GoogleLogout
       clientId={APP_ID}
       buttonText="Logout"
-      onLogoutSuccess={() => props.handleLogout()}
+      onLogoutSuccess={props.handleLogout}
     ></GoogleLogout>
   ) : (
     <GoogleLogin
       clientId={APP_ID}
       buttonText="Log In With Google"
-      onSuccess={res => {
-        props.handleLogin(res);
-      }}
+      onSuccess={res => props.handleLogin(res)}
       onFailure={res => console.error(`Login Error: ${res}`)}
       cookiePolicy={'single_host_origin'}
     />

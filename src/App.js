@@ -7,6 +7,7 @@ import axios from 'axios';
 const BASE_URL = 'http://localhost:8000';
 
 function App() {
+  const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(undefined);
 
   useEffect(() => {
@@ -16,8 +17,11 @@ function App() {
         .post(`${BASE_URL}/users/verify`, { token })
         .then(response => {
           setUserInfo(response.data);
+          setLoading(false);
         })
-        .catch(handleLogout);
+        .catch(() => {
+          handleLogout();
+        });
     }
   }, []);
 
@@ -36,6 +40,7 @@ function App() {
   function handleLogout() {
     setUserInfo(undefined);
     localStorage.setItem('t', '');
+    setLoading(false);
   }
 
   return (
@@ -52,11 +57,15 @@ function App() {
               </a>
             </li>
             <li className="pure-menu-item">
-              <GoogleLoginButton
-                loggedIn={userInfo}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
-              ></GoogleLoginButton>
+              {loading ? (
+                <div>Loading...</div>
+              ) : (
+                <GoogleLoginButton
+                  loggedIn={!!userInfo}
+                  handleLogin={handleLogin}
+                  handleLogout={handleLogout}
+                ></GoogleLoginButton>
+              )}
             </li>
           </ul>
         </div>
