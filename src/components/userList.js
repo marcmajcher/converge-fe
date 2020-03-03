@@ -13,7 +13,7 @@ export default function UserList() {
   return (
     <ul>
       {users.map(user => (
-        <li key={user.googleId}>{user.name} &lt;{user.email}&gt;</li>
+        <li key={user.googleId}><a href="/" alt="chat">[chat]</a> {user.name} &lt;{user.email}&gt;</li>
       ))}
     </ul>
   );
