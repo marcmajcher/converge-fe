@@ -12,13 +12,10 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('t');
-    console.log('TOKEN', token);
     if (token) {
       axios
         .post(`${BASE_URL}/users/verify`, { token })
         .then(response => {
-          console.log('AXIOS RESP', response);
-
           setUserInfo(response.data);
           setLoading(false);
         })
