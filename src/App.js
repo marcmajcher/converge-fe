@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import GoogleLoginButton from './components/googleLoginButton';
 import UserInfo from './components/userInfo';
+import UserList from './components/userList';
 import './App.scss';
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8000';
 
-function App() {
+export default function App() {
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(undefined);
 
@@ -75,13 +76,15 @@ function App() {
 
       <div className="content">
         {userInfo ? (
-          <UserInfo userInfo={userInfo}></UserInfo>
+          <>
+            <UserInfo userInfo={userInfo}></UserInfo>
+            <hr />
+            <UserList></UserList>
+          </>
         ) : (
-          <div>Log in by clicking the button in the upper right!</div>
+          <div></div>
         )}
       </div>
     </div>
   );
 }
-
-export default App;
