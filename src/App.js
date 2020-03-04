@@ -1,90 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import GoogleLoginButton from './components/googleLoginButton';
-import UserInfo from './components/userInfo';
-import UserList from './components/userList';
+import React, { useEffect } from 'react';
 import './App.scss';
 import axios from 'axios';
-
-const BASE_URL = 'http://localhost:8000';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { actionSetUserInfo, actionSetLoading } from './reducer';
+import NavBar from './components/navBar';
+import PageHome from './components/pageHome';
+import UserManager from './components/userManager';
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState(undefined);
-
-  useEffect(() => {
-    const token = localStorage.getItem('t');
-    if (token) {
-      axios
-        .post(`${BASE_URL}/users/verify`, { token })
-        .then(response => {
-          setUserInfo(response.data);
-          setLoading(false);
-        })
-        .catch(() => {
-          handleLogout();
-        });
-    } else {
-      setLoading(false);
-    }
-  }, []);
-
-  function handleLogin(info) {
-    axios
-      .post(`${BASE_URL}/users`, {
-        token: info.tokenObj.id_token,
-        userData: info.profileObj,
-      })
-      .then(res => {
-        setUserInfo(info.profileObj);
-        localStorage.setItem('t', res.data.token);
-      });
-  }
-
-  function handleLogout() {
-    setLoading(false);
-    setUserInfo(undefined);
-    localStorage.setItem('t', '');
-  }
 
   return (
-    <div className="app">
-      <header className="header">
-        <div className="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-          <a className="pure-menu-heading" href="/">
-            Converge
-          </a>
-          <ul className="pure-menu-list">
-            <li className="pure-menu-item">
-              <a href="/" className="pure-menu-link">
-                About
-              </a>
-            </li>
-            <li className="pure-menu-item">
-              {loading ? (
-                <div>Loading...</div>
-              ) : (
-                <GoogleLoginButton
-                  loggedIn={!!userInfo}
-                  handleLogin={handleLogin}
-                  handleLogout={handleLogout}
-                ></GoogleLoginButton>
-              )}
-            </li>
-          </ul>
-        </div>
-      </header>
-
-      <div className="content">
-        {userInfo ? (
-          <>
-            <UserInfo userInfo={userInfo}></UserInfo>
-            <hr />
-            <UserList></UserList>
-          </>
-        ) : (
-          <div></div>
-        )}
-      </div>
-    </div>
+    <Router>
+      <UserManager></UserManager>
+      <NavBar></NavBar>
+      <Switch>
+        <Route exact path="/">
+          <PageHome></PageHome>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
