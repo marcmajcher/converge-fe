@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.scss';
-import axios from 'axios';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { actionSetUserInfo, actionSetLoading } from './reducer';
 import NavBar from './components/navBar';
 import PageHome from './components/pageHome';
 import UserManager from './components/userManager';

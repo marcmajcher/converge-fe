@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import UserInfo from './components/userInfo';
-import UserList from './components/userList';
+import UserInfo from './userInfo';
+import UserList from './userList';
 
 class PageHome extends Component {
   render() {

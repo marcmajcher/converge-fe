@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { actionSetUserInfo, actionSetLoading } from './reducer';
+import { actionSetUserInfo, actionSetLoading } from '../reducer';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8000';
