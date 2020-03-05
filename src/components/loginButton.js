@@ -1,6 +1,6 @@
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { logInUser, logOutUser } from '../dux';
 
@@ -9,8 +9,9 @@ const APP_ID =
 const API_URL = 'http://localhost:8000';
 const TOKEN_KEY = '_t';
 
-function LoginButton({ dispatch, loggedIn }) {
-  console.log('loggedin:', loggedIn);
+export default function LoginButton() {
+  const loggedIn = useSelector(store => store.loggedIn);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const token = localStorage.getItem(TOKEN_KEY);
@@ -41,20 +42,22 @@ function LoginButton({ dispatch, loggedIn }) {
     localStorage.setItem(TOKEN_KEY, '');
   }
 
-  return <>
-    <GoogleLogout className={loggedIn?'':'hidden'}
-      clientId={APP_ID}
-      buttonText="Logout"
-      onLogoutSuccess={() => handleLogout()}
-    ></GoogleLogout>
-    <GoogleLogin
-      clientId={APP_ID} className={loggedIn?'hidden':''}
-      buttonText="Log In With Google"
-      onSuccess={res => handleLogin(res)}
-      onFailure={res => console.error(`Login Error: ${res}`)}
-      cookiePolicy={'single_host_origin'}
-    />
+  return (
+    <>
+      <GoogleLogout
+        className={loggedIn ? '' : 'hidden'}
+        clientId={APP_ID}
+        buttonText="Logout"
+        onLogoutSuccess={handleLogout}
+      ></GoogleLogout>
+      <GoogleLogin
+        clientId={APP_ID}
+        className={loggedIn ? 'hidden' : ''}
+        buttonText="Log In With Google"
+        onSuccess={res => handleLogin(res)}
+        onFailure={res => console.error(`Login Error: ${res}`)}
+        cookiePolicy={'single_host_origin'}
+      />
     </>
+  );
 }
-
-export default connect(store => ({ loggedIn: store.loggedIn }))(LoginButton);
