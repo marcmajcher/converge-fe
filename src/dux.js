@@ -1,4 +1,10 @@
-export default function reducer(state = {}, action) {
+import { createStore } from 'redux';
+const defaultStore = {
+  userInfo: {},
+  loading: true,
+};
+
+export default function reducer(state = defaultStore, action) {
   switch (action.type) {
     case 'SET_USER_INFO':
       return { ...state, userInfo: action.payload };
@@ -16,12 +22,4 @@ export function actionSetLoading(loading) {
   return { type: 'SET_LOADING', payload: loading };
 }
 
-/* ACTIONS:
-
-action: SET_USER_INFO
-payload: { ...userInfo }
-
-action: SET_LOADING
-payload: true/false
-
-*/
+export const store = createStore(reducer, defaultStore);

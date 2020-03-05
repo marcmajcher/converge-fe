@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { actionSetUserInfo, actionSetLoading } from '../reducer';
+import { actionSetUserInfo, actionSetLoading } from '../dux';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8000';
@@ -9,7 +9,7 @@ const TOKEN_KEY = '_t';
 class UserManager extends Component {
   componentDidMount() {
     const token = localStorage.getItem(TOKEN_KEY);
-    if (token) {
+    if (token) {      
       axios
         .post(`${API_URL}/users/verify`, { token })
         .then(response => {
@@ -24,7 +24,7 @@ class UserManager extends Component {
     }
   }
   render() {
-    return <i></i>;
+    return <i className="user-manager"></i>;
   }
 }
 

@@ -16,13 +16,7 @@ function NavBar(props) {
             </a>
           </li>
           <li className="pure-menu-item">
-            {props.loading ? (
-              <div>Loading...</div>
-            ) : (
-              <GoogleLoginButton
-                loggedIn={!!props.userInfo}
-              ></GoogleLoginButton>
-            )}
+            <GoogleLoginButton loggedIn={props.userInfo}></GoogleLoginButton>
           </li>
         </ul>
       </div>
@@ -30,4 +24,4 @@ function NavBar(props) {
   );
 }
 
-export default connect(store => store)(NavBar)
+export default connect(store => store)(NavBar);
