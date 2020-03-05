@@ -7,7 +7,7 @@ const API_URL = 'http://localhost:8000';
 const TOKEN_KEY = '_t';
 
 class UserManager extends Component {
-  onComponentDidMount() {
+  componentDidMount() {
     const token = localStorage.getItem(TOKEN_KEY);
     if (token) {
       axios
@@ -24,7 +24,7 @@ class UserManager extends Component {
     }
   }
   render() {
-    return <div></div>;
+    return <i></i>;
   }
 }
 

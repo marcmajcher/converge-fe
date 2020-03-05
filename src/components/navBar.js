@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import GoogleLoginButton from './googleLoginButton';
 
-function NavBar() {
+function NavBar(props) {
   return (
     <header className="header">
       <div className="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
@@ -16,11 +16,11 @@ function NavBar() {
             </a>
           </li>
           <li className="pure-menu-item">
-            {this.props.loading ? (
+            {props.loading ? (
               <div>Loading...</div>
             ) : (
               <GoogleLoginButton
-                loggedIn={!!this.props.userInfo}
+                loggedIn={!!props.userInfo}
               ></GoogleLoginButton>
             )}
           </li>

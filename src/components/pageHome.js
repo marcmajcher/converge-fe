@@ -7,6 +7,7 @@ class PageHome extends Component {
   render() {
     return (
       <div className="content">
+        <h1>This is the home page</h1>
         {this.props.userInfo ? (
           <>
             <UserInfo userInfo={this.props.userInfo}></UserInfo>

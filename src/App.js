@@ -6,16 +6,15 @@ import PageHome from './components/pageHome';
 import UserManager from './components/userManager';
 
 export default function App() {
-
   return (
     <Router>
-      <UserManager></UserManager>
       <NavBar></NavBar>
+      <UserManager></UserManager>
       <Switch>
-        <Route exact path="/">
-          <PageHome></PageHome>
-        </Route>
-      </Switch>
+         <Route exact path="/">
+           <PageHome></PageHome>
+         </Route>
+       </Switch>
     </Router>
   );
 }

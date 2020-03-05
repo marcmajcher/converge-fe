@@ -1,11 +1,12 @@
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import React from 'react';
-import {handleLogin, handleLogout} from './userManager'
+import { handleLogin, handleLogout } from './userManager';
+import { connect } from 'react-redux';
 
 const APP_ID =
   '730966416306-dv0e9pb4m0k6khl2nrn5r9vskv2j8hmk.apps.googleusercontent.com';
 
-export default function GoogleLoginButton(props) {
+function GoogleLoginButton(props) {
   return props.loggedIn ? (
     <GoogleLogout
       clientId={APP_ID}
@@ -22,3 +23,5 @@ export default function GoogleLoginButton(props) {
     />
   );
 }
+
+export default connect(props => props)(GoogleLoginButton);
