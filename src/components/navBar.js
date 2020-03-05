@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import GoogleLoginButton from './googleLoginButton';
+import GoogleLoginButton from './loginButton';
 
 function NavBar(props) {
   return (

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import UserInfo from './userInfo';
 import UserList from './userList';
 
-class PageHome extends Component {
+class PageMain extends Component {
   render() {
     return (
       <div className="content">
@@ -22,4 +22,4 @@ class PageHome extends Component {
   }
 }
 
-export default connect(store => store)(PageHome);
+export default connect(store => store)(PageMain);
