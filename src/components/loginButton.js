@@ -2,26 +2,23 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { logInUser, logOutUser } from '../dux';
+import { logInUser, logOutUser, setUserInfo } from '../dux';
 
 export default function LoginButton() {
   const dispatch = useDispatch();
   const appId = useSelector(store => store.appId);
   const endpoint = useSelector(store => store.endpoint);
   const loggedIn = useSelector(store => store.loggedIn);
-  const tokenKey = useSelector(store => store.tokenKey);
+  const token = useSelector(store => store.token);
 
   useEffect(() => {
-    const token = localStorage.getItem(tokenKey);
     if (token) {
       axios
         .post(`${endpoint}/users/verify`, { token })
-        .then(response => dispatch(logInUser(response.data)))
-        .catch(handleLogout);
-    } else {
-      dispatch(logOutUser());
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        .then(response => dispatch(setUserInfo(response.data)))
+        .catch(() => dispatch(logOutUser()));
+    } 
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleLogin(info) {
     axios
@@ -29,15 +26,8 @@ export default function LoginButton() {
         token: info.tokenObj.id_token,
         userData: info.profileObj,
       })
-      .then(res => {
-        dispatch(logInUser(info.profileObj));
-        localStorage.setItem(tokenKey, res.data.token);
-      });
-  }
-
-  function handleLogout() {
-    dispatch(logOutUser());
-    localStorage.setItem(tokenKey, '');
+      .then(res => dispatch(logInUser(info.profileObj, res.data.token)))
+      .catch(err => console.error(err));
   }
 
   return (
@@ -46,7 +36,7 @@ export default function LoginButton() {
         className={loggedIn ? '' : 'hidden'}
         clientId={appId}
         buttonText="Logout"
-        onLogoutSuccess={handleLogout}
+        onLogoutSuccess={() => dispatch(logOutUser())}
       ></GoogleLogout>
       <GoogleLogin
         clientId={appId}
