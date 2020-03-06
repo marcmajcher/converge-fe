@@ -16,15 +16,15 @@ export default function App() {
     dispatch(checkToken());
     const socket = socketIOClient(endpoint);
 
-    socket.on('connect', socket =>
+    socket.on('connect', () => {
       socket
         .on('authenticated', () => {
           /* do all the things */
           socket.on('number', data => dispatch(setNumber(data)));
           dispatch(setSocket(socket));
         })
-        .emit('authenticate', { token })
-    );
+        .emit('authenticate', { token });
+    });
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
