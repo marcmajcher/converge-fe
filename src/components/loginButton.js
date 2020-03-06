@@ -4,20 +4,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { logInUser, logOutUser } from '../dux';
 
-const APP_ID =
-  '730966416306-dv0e9pb4m0k6khl2nrn5r9vskv2j8hmk.apps.googleusercontent.com';
-const API_URL = 'http://localhost:8000';
-const TOKEN_KEY = '_t';
-
 export default function LoginButton() {
-  const loggedIn = useSelector(store => store.loggedIn);
   const dispatch = useDispatch();
+  const appId = useSelector(store => store.appId);
+  const endpoint = useSelector(store => store.endpoint);
+  const loggedIn = useSelector(store => store.loggedIn);
+  const tokenKey = useSelector(store => store.tokenKey);
 
   useEffect(() => {
-    const token = localStorage.getItem(TOKEN_KEY);
+    const token = localStorage.getItem(tokenKey);
     if (token) {
       axios
-        .post(`${API_URL}/users/verify`, { token })
+        .post(`${endpoint}/users/verify`, { token })
         .then(response => dispatch(logInUser(response.data)))
         .catch(handleLogout);
     } else {
@@ -27,31 +25,31 @@ export default function LoginButton() {
 
   function handleLogin(info) {
     axios
-      .post(`${API_URL}/users`, {
+      .post(`${endpoint}/users`, {
         token: info.tokenObj.id_token,
         userData: info.profileObj,
       })
       .then(res => {
         dispatch(logInUser(info.profileObj));
-        localStorage.setItem(TOKEN_KEY, res.data.token);
+        localStorage.setItem(tokenKey, res.data.token);
       });
   }
 
   function handleLogout() {
     dispatch(logOutUser());
-    localStorage.setItem(TOKEN_KEY, '');
+    localStorage.setItem(tokenKey, '');
   }
 
   return (
     <>
       <GoogleLogout
         className={loggedIn ? '' : 'hidden'}
-        clientId={APP_ID}
+        clientId={appId}
         buttonText="Logout"
         onLogoutSuccess={handleLogout}
       ></GoogleLogout>
       <GoogleLogin
-        clientId={APP_ID}
+        clientId={appId}
         className={loggedIn ? 'hidden' : ''}
         buttonText="Log In With Google"
         onSuccess={res => handleLogin(res)}
