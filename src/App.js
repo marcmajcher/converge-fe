@@ -5,7 +5,7 @@ import NavBar from './components/navBar';
 import PageMain from './components/pageMain';
 import socketIOClient from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSocket, setNumber, checkToken } from './dux';
+import { setSocket, setNumber, checkToken } from './redux-actions';
 
 export default function App() {
   const dispatch = useDispatch();
