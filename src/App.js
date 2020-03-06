@@ -13,9 +13,9 @@ export default function App() {
 
   useEffect(() => {
     const socket = socketIOClient(endpoint);
-    socket.on('message', data => console.log(data));
+    socket.on('number', data => console.log(data));
     dispatch(setSocket(socket));
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Router>
