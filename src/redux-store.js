@@ -14,7 +14,7 @@ const defaultStore = {
   _randomNumber: 0,
 };
 
- function reducer(state = defaultStore, action) {
+function reducer(state = defaultStore, action) {
   switch (action.type) {
     case 'CHECK_TOKEN':
       const localToken = localStorage.getItem(tokenKey);
