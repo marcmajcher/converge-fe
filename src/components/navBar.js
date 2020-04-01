@@ -10,11 +10,20 @@ function NavBar(props) {
           Converge
         </a>
         <ul className="pure-menu-list">
-          <li className="pure-menu-item">
+          {/* <li className="pure-menu-item">
             <a href="/" className="pure-menu-link">
               About
             </a>
-          </li>
+          </li> */}
+          {props.userInfo && (
+            <li className="pure-menu-item">
+              <img
+                className="user-image"
+                src={props.userInfo.imageUrl}
+                alt={props.userInfo.name}
+              />
+            </li>
+          )}
           <li className="pure-menu-item">
             <GoogleLoginButton loggedIn={props.userInfo}></GoogleLoginButton>
           </li>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.scss';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavBar from './components/navBar';
-import PageMain from './components/pageMain';
+import PageMain from './components/pages/mainPage';
 import io from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSocket, setNumber, checkToken } from './redux-actions';
@@ -23,6 +23,9 @@ export default function App() {
         .on('connect', () => {
           /* do all the things */
           socket.on('number', data => dispatch(setNumber(data)));
+
+
+
           dispatch(setSocket(socket));
         })
         .on('unauthorized', msg => {

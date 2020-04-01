@@ -31,6 +31,7 @@ function reducer(state = defaultStore, action) {
       return { ...state, userInfo, token, loggedIn: true };
     case 'LOG_OUT':
       localStorage.setItem(tokenKey, '');
+      state.socket.disconnect(true);
       return {
         ...state,
         userInfo: undefined,
