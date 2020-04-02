@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import './App.scss';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import NavBar from './components/navBar';
 import LoginPage from './components/pages/loginPage';
 import MainPage from './components/pages/mainPage';
@@ -13,7 +18,6 @@ import { setSocket, setNumber, checkToken } from './actions';
 export default function App() {
   const endpoint = useSelector(store => store.endpoint);
   const dispatch = useDispatch();
-  const loggedIn = !!useSelector(store => store.userInfo);
   const token = useSelector(store => store.token);
 
   useEffect(() => {
@@ -42,22 +46,43 @@ export default function App() {
     <Router>
       <NavBar></NavBar>
       <div className="content">
-        {loggedIn ? (
-          <Switch>
-            <Route exact path="/">
-              <MainPage></MainPage>
-            </Route>
-            <Route exact path="/new">
-              <NewGamePage></NewGamePage>
-            </Route>
-            <Route exact path="/join">
-              <JoinGamePage></JoinGamePage>
-            </Route>
-          </Switch>
-        ) : (
-          <LoginPage></LoginPage>
-        )}
+        <Switch>
+          <Route exact path="/login">
+            <LoginPage></LoginPage>
+          </Route>
+          <AuthRoute exact path="/">
+            <MainPage></MainPage>
+          </AuthRoute>
+          <AuthRoute exact path="/new">
+            <NewGamePage></NewGamePage>
+          </AuthRoute>
+          <AuthRoute exact path="/join">
+            <JoinGamePage></JoinGamePage>
+          </AuthRoute>
+        </Switch>
       </div>
     </Router>
+  );
+}
+
+function AuthRoute({ children, ...rest }) {
+  const loggedIn = !!useSelector(store => store.userInfo);
+
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        loggedIn ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
   );
 }
