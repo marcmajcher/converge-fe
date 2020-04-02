@@ -5,13 +5,13 @@ const tokenKey = '_t';
 const defaultStore = {
   appId:
     '730966416306-dv0e9pb4m0k6khl2nrn5r9vskv2j8hmk.apps.googleusercontent.com',
-  endpoint: 'http://localhost:8000',
+  endpoint: 'http://192.168.1.164:8000',
+  // endpoint: 'http://localhost:8000',
   gameId: undefined,
   loggedIn: false,
   socket: undefined,
   token: undefined,
   userInfo: undefined,
-  _randomNumber: 0,
 };
 
 function reducer(state = defaultStore, action) {
@@ -19,8 +19,6 @@ function reducer(state = defaultStore, action) {
     case 'CHECK_TOKEN':
       const localToken = localStorage.getItem(tokenKey);
       return { ...state, token: localToken };
-    case 'SET_NUMBER':
-      return { ...state, _randomNumber: action.payload };
     case 'SET_USER_INFO':
       return { ...state, userInfo: action.payload, loggedIn: true };
     case 'SET_SOCKET':

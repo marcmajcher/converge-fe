@@ -1,9 +1,6 @@
 export function checkToken() {
   return { type: 'CHECK_TOKEN' };
 }
-export function setNumber(number) {
-  return { type: 'SET_NUMBER', payload: number };
-}
 export function setSocket(socket) {
   return { type: 'SET_SOCKET', payload: socket };
 }
