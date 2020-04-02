@@ -16,3 +16,6 @@ export function logInUser(userInfo, token) {
 export function logOutUser() {
   return { type: 'LOG_OUT', payload: false };
 }
+export function resetRedirect() {
+  return { type: 'RESET_REDIRECT' };
+}

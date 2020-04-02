@@ -2,7 +2,7 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { logInUser, logOutUser, setUserInfo } from '../redux-actions';
+import { logInUser, logOutUser, setUserInfo } from '../actions';
 
 export default function LoginButton() {
   const dispatch = useDispatch();

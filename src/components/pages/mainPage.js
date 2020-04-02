@@ -1,22 +1,14 @@
 import React from 'react';
 import UserPage from './userPage';
-import LoginPage from './loginPage';
-import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function MainPage() {
-  const loggedIn = !!useSelector(store => store.userInfo);
   return (
-    <div className="content">
-      {loggedIn ? (
-        <div>
-          <UserPage></UserPage>
-          <button>Start a New Game</button>
-          or
-          <button>Join a Game</button>
-        </div>
-      ) : (
-        <LoginPage></LoginPage>
-      )}
+    <div>
+      <UserPage></UserPage>
+      <Link to="/new">Start a New Game</Link>
+      or
+      <Link to="/join">Join a Game</Link>
     </div>
   );
 }
