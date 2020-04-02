@@ -6,7 +6,7 @@ const BASE_URL = 'http://localhost:8000';
 
 export default function UserList() {
   const [users, setUsers] = useState([]);
-  const userInfo = useSelector(store => store.userInfo);
+  const userInfo = useSelector(s => s.userInfo);
 
   useEffect(() => {
     axios

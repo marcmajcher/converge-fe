@@ -16,3 +16,6 @@ export function logOutUser() {
 export function setGameId(id) {
   return { type: 'SET_GAME_ID', payload: id };
 }
+export function setCountdown(count) {
+  return { type: 'SET_COUNTDOWN', payload: count };
+}

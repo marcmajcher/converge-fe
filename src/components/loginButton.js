@@ -6,10 +6,10 @@ import { logInUser, logOutUser, setUserInfo } from '../actions';
 
 export default function LoginButton() {
   const dispatch = useDispatch();
-  const appId = useSelector(store => store.appId);
-  const endpoint = useSelector(store => store.endpoint);
-  const loggedIn = useSelector(store => store.loggedIn);
-  const token = useSelector(store => store.token);
+  const appId = useSelector(s => s.appId);
+  const endpoint = useSelector(s => s.endpoint);
+  const loggedIn = useSelector(s => s.loggedIn);
+  const token = useSelector(s => s.token);
 
   useEffect(() => {
     if (token) {

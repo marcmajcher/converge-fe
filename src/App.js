@@ -1,25 +1,28 @@
 import React, { useEffect } from 'react';
 import './App.scss';
+import io from 'socket.io-client';
+import { checkToken } from './actions';
+import { useSelector, useDispatch } from 'react-redux';
+import useSocketSetup from './hooks/useSocketSetup';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from 'react-router-dom';
+
 import NavBar from './components/navBar';
+import CountdownPage from './components/pages/countdownPage';
+import GamePage from './components/pages/gamePage';
+import JoinGamePage from './components/pages/joinGamePage';
 import LoginPage from './components/pages/loginPage';
 import MainPage from './components/pages/mainPage';
 import NewGamePage from './components/pages/startGamePage';
-import JoinGamePage from './components/pages/joinGamePage';
-import io from 'socket.io-client';
-import { useSelector, useDispatch } from 'react-redux';
-import { checkToken } from './actions';
-import useSocketSetup from './hooks/useSocketSetup';
 
 export default function App() {
-  const endpoint = useSelector(store => store.endpoint);
+  const endpoint = useSelector(s => s.endpoint);
   const dispatch = useDispatch();
-  const token = useSelector(store => store.token);
+  const token = useSelector(s => s.token);
   const initSocket = useSocketSetup();
 
   useEffect(() => {
@@ -57,6 +60,12 @@ export default function App() {
           <AuthRoute exact path="/join">
             <JoinGamePage></JoinGamePage>
           </AuthRoute>
+          <AuthRoute exact path="/cd">
+            <CountdownPage></CountdownPage>
+          </AuthRoute>
+          <AuthRoute exact path="/game">
+            <GamePage></GamePage>
+          </AuthRoute>
         </Switch>
       </div>
     </Router>
@@ -64,7 +73,7 @@ export default function App() {
 }
 
 function AuthRoute({ children, ...rest }) {
-  const loggedIn = !!useSelector(store => store.userInfo);
+  const loggedIn = !!useSelector(s => s.userInfo);
 
   return (
     <Route
