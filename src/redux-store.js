@@ -6,12 +6,11 @@ const defaultStore = {
   appId:
     '730966416306-dv0e9pb4m0k6khl2nrn5r9vskv2j8hmk.apps.googleusercontent.com',
   endpoint: 'http://localhost:8000',
+  gameId: undefined,
   loggedIn: false,
-  redirect: undefined,
   socket: undefined,
   token: undefined,
   userInfo: undefined,
-
   _randomNumber: 0,
 };
 
@@ -20,8 +19,6 @@ function reducer(state = defaultStore, action) {
     case 'CHECK_TOKEN':
       const localToken = localStorage.getItem(tokenKey);
       return { ...state, token: localToken };
-    case 'RESET_REDIRECT':
-      return { ...state, redirect: undefined };
     case 'SET_NUMBER':
       return { ...state, _randomNumber: action.payload };
     case 'SET_USER_INFO':
@@ -38,10 +35,11 @@ function reducer(state = defaultStore, action) {
       return {
         ...state,
         loggedIn: false,
-        redirect: '/',
         token: undefined,
         userInfo: undefined,
       };
+    case 'SET_GAME_ID':
+      return { ...state, gameId: action.payload };
     default:
       return state;
   }

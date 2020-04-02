@@ -13,12 +13,14 @@ import NewGamePage from './components/pages/startGamePage';
 import JoinGamePage from './components/pages/joinGamePage';
 import io from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSocket, setNumber, checkToken } from './actions';
+import { checkToken } from './actions';
+import useSocketSetup from './hooks/useSocketSetup';
 
 export default function App() {
   const endpoint = useSelector(store => store.endpoint);
   const dispatch = useDispatch();
   const token = useSelector(store => store.token);
+  const initSocket = useSocketSetup();
 
   useEffect(() => {
     dispatch(checkToken());
@@ -29,11 +31,7 @@ export default function App() {
 
       socket
         .on('connect', () => {
-          /* do all the things */
-          socket.on('number', data => dispatch(setNumber(data)));
-          socket.on('info', message => console.info(message));
-
-          dispatch(setSocket(socket));
+          initSocket(socket);
         })
         .on('unauthorized', msg => {
           console.log(`unauthorized: ${JSON.stringify(msg.data)}`);
