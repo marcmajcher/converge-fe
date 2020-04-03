@@ -1,15 +1,21 @@
 import React from 'react';
 import UserPage from './userPage';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setGameState, resetGame } from '../../actions';
 
 export default function MainPage() {
-  // TBD: dispatch RESET_GAME
+  const dispatch = useDispatch();
+  dispatch(resetGame());
+  
   return (
     <div>
       <UserPage></UserPage>
-      <Link to="/new">Start a New Game</Link>
-      or
-      <Link to="/join">Join a Game</Link>
+      <button onClick={() => dispatch(setGameState('newGame'))}>
+        Start a New Game
+      </button>
+      <button onClick={() => dispatch(setGameState('joinGame'))}>
+        Join a Game
+      </button>
     </div>
   );
 }
