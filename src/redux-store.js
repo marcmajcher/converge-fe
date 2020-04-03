@@ -8,7 +8,7 @@ const defaultStore = {
   countdown: undefined,
   endpoint:
     process.env.NODE_ENV === 'production'
-      ? 'https://converge-game-be.herokuapp.com/'
+      ? 'https://converge-game-be.herokuapp.com'
       : 'http://localhost:8000',
   gameId: undefined,
   loggedIn: false,
