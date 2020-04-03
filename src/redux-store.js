@@ -15,6 +15,7 @@ const defaultStore = {
   socket: undefined,
   token: undefined,
   userInfo: undefined,
+  words: undefined,
 };
 
 function reducer(state = defaultStore, action) {
@@ -43,8 +44,12 @@ function reducer(state = defaultStore, action) {
       return { ...state, gameId: action.payload };
     case 'SET_COUNTDOWN':
       return { ...state, countdown: action.payload };
-    case 'CLEAR_COUNTDOWN':
+    case 'RESET_COUNTDOWN':
       return { ...state, countdown: undefined };
+    case 'SET_WORDS':
+      return { ...state, words: action.payload };
+    case 'RESET_WORDS':
+      return { ...state, words: undefined };
     default:
       return state;
   }

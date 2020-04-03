@@ -19,3 +19,9 @@ export function setGameId(id) {
 export function setCountdown(count) {
   return { type: 'SET_COUNTDOWN', payload: count };
 }
+export function setWords(words) {
+  return { type: 'SET_WORDS', payload: words };
+}
+export function resetWords() {
+  return { type: 'RESET_WORDS' };
+}

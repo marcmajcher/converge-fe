@@ -3,6 +3,7 @@ import UserPage from './userPage';
 import { Link } from 'react-router-dom';
 
 export default function MainPage() {
+  // TBD: dispatch RESET_GAME
   return (
     <div>
       <UserPage></UserPage>

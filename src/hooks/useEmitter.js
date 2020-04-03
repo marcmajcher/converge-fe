@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-const validMessages = ['joinGame', 'startNewGame'];
+const validMessages = ['joinGame', 'sendWord', 'startNewGame'];
 
 export default function useEmitter(type) {
   const socket = useSelector(s => s.socket);

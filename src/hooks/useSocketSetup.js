@@ -1,6 +1,6 @@
 import { setSocket } from '../actions';
 import { useDispatch } from 'react-redux';
-import { setGameId, setCountdown } from '../actions';
+import { setGameId, setCountdown, setWords } from '../actions';
 
 export default function useSocketSetup() {
   const dispatch = useDispatch();
@@ -9,6 +9,8 @@ export default function useSocketSetup() {
     socket.on('newGameCreated', data => dispatch(setGameId(data.gameId)));
     socket.on('startCountdown', count => dispatch(setCountdown(count)));
     socket.on('startGame', msg => console.log(msg));
+    socket.on('roundOver', words => dispatch(setWords(words)));
+    socket.on('winGame', null);
     dispatch(setSocket(socket));
   };
 }
