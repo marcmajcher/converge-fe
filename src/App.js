@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { checkToken, setGameState } from './actions';
+import { checkToken, clearGame, setGameState } from './actions';
 import io from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import useSocketSetup from './hooks/useSocketSetup';
@@ -12,12 +12,13 @@ import LoginPage from './components/pages/loginPage';
 import MainPage from './components/pages/mainPage';
 import NavBar from './components/navBar';
 import NewGamePage from './components/pages/newGamePage';
+import WinPage from './components/pages/winPage';
 
 export default function App() {
-  const endpoint = useSelector(s => s.endpoint);
-  const gameState = useSelector(s => s.gameState);
-  const loggedIn = !!useSelector(s => s.userInfo);
-  const token = useSelector(s => s.token);
+  const endpoint = useSelector((s) => s.endpoint);
+  const gameState = useSelector((s) => s.gameState);
+  const loggedIn = !!useSelector((s) => s.userInfo);
+  const token = useSelector((s) => s.token);
   const dispatch = useDispatch();
   const initSocket = useSocketSetup();
 
@@ -27,6 +28,7 @@ export default function App() {
     joinGame: <JoinGamePage></JoinGamePage>,
     main: <MainPage></MainPage>,
     newGame: <NewGamePage></NewGamePage>,
+    winGame: <WinPage></WinPage>,
   };
 
   useEffect(() => {
@@ -39,9 +41,10 @@ export default function App() {
       socket
         .on('connect', () => {
           initSocket(socket);
+          dispatch(clearGame());
           dispatch(setGameState('main'));
         })
-        .on('unauthorized', msg => {
+        .on('unauthorized', (msg) => {
           console.log(`unauthorized: ${JSON.stringify(msg.data)}`);
         });
     }

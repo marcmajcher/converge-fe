@@ -24,13 +24,22 @@ function reducer(state = defaultStore, action) {
     case 'CHECK_TOKEN':
       const localToken = localStorage.getItem(tokenKey);
       return { ...state, token: localToken };
+    case 'CLEAR_GAME':
+      return {
+        ...state,
+        gameState: 'main',
+        gameId: undefined,
+        words: undefined,
+        countdown: undefined,
+      };
+
     case 'LOG_IN':
       const { token, userInfo } = action.payload;
       localStorage.setItem(tokenKey, token);
       return { ...state, userInfo, token, loggedIn: true };
     case 'LOG_OUT':
       localStorage.setItem(tokenKey, '');
-      state.socket.disconnect(true);
+      state.socket && state.socket.disconnect(true);
       return {
         ...state,
         loggedIn: false,
@@ -42,9 +51,8 @@ function reducer(state = defaultStore, action) {
     case 'RESET_GAME':
       return {
         ...state,
-        gameId: undefined,
-        words: undefined,
         countdown: undefined,
+        words: undefined,
       };
     case 'RESET_WORDS':
       return { ...state, words: undefined };

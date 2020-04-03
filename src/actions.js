@@ -1,6 +1,9 @@
 export function checkToken() {
   return { type: 'CHECK_TOKEN' };
 }
+export function clearGame() {
+  return { type: 'CLEAR_GAME' };
+}
 export function logInUser(userInfo, token) {
   return { type: 'LOG_IN', payload: { token, userInfo } };
 }
