@@ -7,7 +7,7 @@ function NavBar(props) {
     <header className="header">
       <div className="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
         <a className="pure-menu-heading" href="/">
-          Converge
+          Converge 
         </a>
         <ul className="pure-menu-list">
           {props.userInfo && (
@@ -19,7 +19,7 @@ function NavBar(props) {
               />
             </li>
           )}
-          <li className="pure-menu-item">
+          <li className="login-button pure-menu-item">
             <GoogleLoginButton></GoogleLoginButton>
           </li>
         </ul>

@@ -1,22 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&display=swap');
+$color-blue-1: #007A87;
+
+$color-background: #FFE3BD;
+$color-darkest: #0F0907; 
+
+html {
+  background-color: black;
+}
+.root {
+  background-color: $color-background;
+  color: #0F0907;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 2em;
+}
+
+.page-login {
+  text-align: center;
+}
+
 .home-menu {
   padding: 0.5em;
   text-align: center;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 .home-menu {
-  background: #2d3e50;
-}
-.pure-menu.pure-menu-fixed {
-  /* Fixed menus normally have a border at the bottom. */
-  border-bottom: none;
-  /* I need a higher z-index here because of the scroll-over effect. */
-  z-index: 4;
+  // background: none;
 }
 
+
 .home-menu .pure-menu-heading {
-  color: white;
-  font-weight: 400;
-  font-size: 120%;
+  font-family: 'Titillium Web', sans-serif;
+  color: $color-blue-1;
+  font-weight: 900;
+  font-size: 5em;
 }
 
 .home-menu .pure-menu-selected a {
@@ -24,13 +44,13 @@
 }
 
 .home-menu a {
-  color: #6fbef3;
+  // color: #6fbef3;
 }
 .home-menu li a:hover,
 .home-menu li a:focus {
   background: none;
   border: none;
-  color: #aecfe5;
+  // color: #aecfe5;
 }
 
 .home-menu .user-image {
@@ -39,7 +59,7 @@
 }
 
 .content {
-  background-color: skyblue;
+  // background-color: skyblue;
   margin-top: 65px;
   height: 100vh;
 }
