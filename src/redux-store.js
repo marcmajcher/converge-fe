@@ -5,9 +5,11 @@ const tokenKey = '_t';
 const defaultStore = {
   appId:
     '730966416306-dv0e9pb4m0k6khl2nrn5r9vskv2j8hmk.apps.googleusercontent.com',
-  // endpoint: 'http://192.168.1.164:8000',
   countdown: undefined,
-  endpoint: 'http://localhost:8000',
+  endpoint:
+    process.env.NODE_ENV === 'production'
+      ? 'https://converge-game-be.herokuapp.com/'
+      : 'http://localhost:8000',
   gameId: undefined,
   loggedIn: false,
   socket: undefined,
@@ -39,11 +41,11 @@ function reducer(state = defaultStore, action) {
       };
     case 'SET_GAME_ID':
       return { ...state, gameId: action.payload };
-      case 'SET_COUNTDOWN':
-        return {...state, countdown: action.payload}
-        case 'CLEAR_COUNTDOWN':
-          return {...state, countdown: undefined}
-      default:
+    case 'SET_COUNTDOWN':
+      return { ...state, countdown: action.payload };
+    case 'CLEAR_COUNTDOWN':
+      return { ...state, countdown: undefined };
+    default:
       return state;
   }
 }
