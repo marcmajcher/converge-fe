@@ -1,29 +1,35 @@
 import React, { useEffect } from 'react';
-import './App.scss';
+import { checkToken, clearGame, setGameState } from './actions';
 import io from 'socket.io-client';
-import { checkToken } from './actions';
 import { useSelector, useDispatch } from 'react-redux';
 import useSocketSetup from './hooks/useSocketSetup';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
+import './App.scss';
 
-import NavBar from './components/navBar';
 import CountdownPage from './components/pages/countdownPage';
 import GamePage from './components/pages/gamePage';
 import JoinGamePage from './components/pages/joinGamePage';
 import LoginPage from './components/pages/loginPage';
 import MainPage from './components/pages/mainPage';
-import NewGamePage from './components/pages/startGamePage';
+import NavBar from './components/navBar';
+import NewGamePage from './components/pages/newGamePage';
+import WinPage from './components/pages/winPage';
 
 export default function App() {
-  const endpoint = useSelector(s => s.endpoint);
+  const endpoint = useSelector((s) => s.endpoint);
+  const gameState = useSelector((s) => s.gameState);
+  const loggedIn = !!useSelector((s) => s.userInfo);
+  const token = useSelector((s) => s.token);
   const dispatch = useDispatch();
-  const token = useSelector(s => s.token);
   const initSocket = useSocketSetup();
+
+  const pages = {
+    countdown: <CountdownPage></CountdownPage>,
+    game: <GamePage></GamePage>,
+    joinGame: <JoinGamePage></JoinGamePage>,
+    main: <MainPage></MainPage>,
+    newGame: <NewGamePage></NewGamePage>,
+    winGame: <WinPage></WinPage>,
+  };
 
   useEffect(() => {
     dispatch(checkToken());
@@ -35,61 +41,21 @@ export default function App() {
       socket
         .on('connect', () => {
           initSocket(socket);
+          dispatch(clearGame());
+          dispatch(setGameState('main'));
         })
-        .on('unauthorized', msg => {
+        .on('unauthorized', (msg) => {
           console.log(`unauthorized: ${JSON.stringify(msg.data)}`);
-          throw new Error(msg.data.type);
         });
     }
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const gamePage = loggedIn ? pages[gameState] : <LoginPage></LoginPage>;
+  console.log('GAME STATE', gameState);
   return (
-    <Router>
+    <>
       <NavBar></NavBar>
-      <div className="content">
-        <Switch>
-          <Route exact path="/login">
-            <LoginPage></LoginPage>
-          </Route>
-          <AuthRoute exact path="/">
-            <MainPage></MainPage>
-          </AuthRoute>
-          <AuthRoute exact path="/new">
-            <NewGamePage></NewGamePage>
-          </AuthRoute>
-          <AuthRoute exact path="/join">
-            <JoinGamePage></JoinGamePage>
-          </AuthRoute>
-          <AuthRoute exact path="/cd">
-            <CountdownPage></CountdownPage>
-          </AuthRoute>
-          <AuthRoute exact path="/game">
-            <GamePage></GamePage>
-          </AuthRoute>
-        </Switch>
-      </div>
-    </Router>
-  );
-}
-
-function AuthRoute({ children, ...rest }) {
-  const loggedIn = !!useSelector(s => s.userInfo);
-
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        loggedIn ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
+      <div className="content">{gamePage}</div>
+    </>
   );
 }

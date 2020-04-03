@@ -11,22 +11,17 @@ export default function GamePage() {
   const socket = useSelector(s => s.socket);
 
   useEffect(() => {
-    console.log(words);
     setSubmitted(false);
     setWord('');
   }, [words]);
-
-  function onChangeWord(e) {
-    setWord(e.target.value);
-  }
 
   function onSubmitWord() {
     emitSendWord(word);
     setSubmitted(true);
   }
 
-  const roundWords = words ? words[words.length - 1] : {};
   const myId = socket.id;
+  const roundWords = words ? words[words.length - 1] : {};
   const theirId = words
     ? Object.keys(roundWords).filter(e => e !== myId)[0]
     : null;
@@ -49,7 +44,8 @@ export default function GamePage() {
         <div>You sent: {word} -- waiting...</div>
       ) : (
         <div>
-          Enter a word: <input value={word} onChange={onChangeWord}></input>
+          Enter a word:{' '}
+          <input value={word} onChange={e => setWord(e.target.value)}></input>
           <button onClick={onSubmitWord}>GO!</button>
         </div>
       )}

@@ -1,28 +1,17 @@
 import React from 'react';
-import { useState } from 'react';
 import useEmitter from '../../hooks/useEmitter';
-import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function JoinGamePage() {
-  const [gameId, setGameId] = useState('');
   const emitJoinGame = useEmitter('joinGame');
-  const countdown = useSelector(s => s.countdown);
+  const [gameId, setGameId] = useState('');
 
-  function onBeginGame() {
-    emitJoinGame(gameId);
-  }
-  function onGameIdChange(e) {
-    setGameId(e.target.value);
-  }
-
-  return countdown ? (
-    <Redirect to="/cd"></Redirect>
-  ) : (
+  return (
     <div>
       <h1>JOIN GAME</h1>
-      Game ID: <input value={gameId} onChange={onGameIdChange}></input>
-      <button onClick={onBeginGame}>Begin!</button>
+      Game ID:{' '}
+      <input value={gameId} onChange={e => setGameId(e.target.value)}></input>
+      <button onClick={() => emitJoinGame(gameId)}>Begin!</button>
     </div>
-  );
+  ) 
 }
