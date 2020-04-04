@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useEmitter from '../../hooks/useEmitter';
-import { setGameState } from '../../actions';
 
 export default function WinPage() {
   const socket = useSelector((s) => s.socket);
   const words = useSelector((s) => s.words);
-  const dispatch = useDispatch();
   const resetEmitter = useEmitter('resetGame');
   const endEmitter = useEmitter('endGame');
 
@@ -48,7 +46,6 @@ export default function WinPage() {
         <button
           className="pure-button button-main"
           onClick={() => {
-            // dispatch(setGameState('countdown'));
             resetEmitter();
           }}
         >

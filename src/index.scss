@@ -194,3 +194,14 @@ input:focus {
     margin-bottom: 0.2em;
   }
 }
+
+@media only screen and (max-device-width: 480px) {
+  html {
+    font-size: 9px;
+
+  }
+  .root {
+    background-color: red;
+    min-width: 0;
+  }
+}
