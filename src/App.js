@@ -50,7 +50,7 @@ export default function App() {
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const gamePage = loggedIn ? pages[gameState] : <LoginPage></LoginPage>;
-  console.log('GAME STATE', gameState);
+
   return (
     <>
       <NavBar></NavBar>

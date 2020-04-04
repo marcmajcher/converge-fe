@@ -1,81 +1,196 @@
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&display=swap');
-$color-blue-1: #007A87;
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600;900&family=Ubuntu&display=swap');
 
-$color-background: #FFE3BD;
-$color-darkest: #0F0907; 
+$color-blue-1: #007a87;
+$color-blue-5: #2493a0;
+$color-blue-8: #3abccb;
+$color-orange-1: #fff6e9;
+$color-orange-5: #f9a733;
+$color-orange-9: #e68600;
+$color-darkest: #0f0907;
+$color-lightest: white;
+
+$color-background: $color-orange-1;
+
+$font-display: 'Titillium Web', sans-serif;
+$font-body: 'Ubuntu', sans-serif;
 
 html {
   background-color: black;
+  font-family: $font-body;
 }
+
+p {
+  font-size: 2em;
+}
+
+h1 {
+  margin-top: 1.5em;
+}
+
 .root {
   background-color: $color-background;
-  color: #0F0907;
+  color: #0f0907;
   position: absolute;
   left: 0;
   top: 0;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   border-radius: 2em;
+  text-align: center;
+  min-width: 666px;
 }
 
-.page-login {
+header {
+  background-color: $color-orange-5;
+  border-top-right-radius: 2em;
+  border-top-left-radius: 2em;
+
+  h1 {
+    margin: 0;
+    color: $color-blue-1;
+    font: 900 5em $font-display;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .user-image {
+    position: absolute;
+    top: 0.7em;
+    left: 1em;
+    border: 3px solid $color-blue-1;
+    height: 6em;
+    width: 6em;
+    border-radius: 4em;
+  }
+
+  .button-login {
+    position: absolute;
+    right: 1em;
+    top: 2.5em;
+  }
+}
+
+.splash-button-login {
+  left: 50%;
+  margin-left: -90px;
+  position: absolute;
+  top: 18em;
+}
+
+.button-main {
+  background-color: $color-blue-8;
+  border: 2px solid $color-blue-5;
+  border-radius: 0.8em;
+  font-size: 2em;
+}
+
+input[type='text'] {
+  border: 4px solid $color-darkest;
+  border-radius: 0.4em;
+  background-color: $color-lightest;
+  font: 600 2em $font-display;
+  margin: 0.4em 0 1em 0;
+  padding: 0.4em;
   text-align: center;
 }
 
-.home-menu {
-  padding: 0.5em;
-  text-align: center;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-}
-.home-menu {
-  // background: none;
+input:focus {
+  outline: none;
 }
 
-
-.home-menu .pure-menu-heading {
-  font-family: 'Titillium Web', sans-serif;
-  color: $color-blue-1;
-  font-weight: 900;
-  font-size: 5em;
+.your {
+  float: left;
+}
+.their {
+  float: right;
+}
+.word,
+.words {
+  margin: 3em 0;
+  width: 50%;
+}
+.clear {
+  clear: both;
 }
 
-.home-menu .pure-menu-selected a {
-  color: white;
-}
+/* Page Specific Styling */
 
-.home-menu a {
-  // color: #6fbef3;
-}
-.home-menu li a:hover,
-.home-menu li a:focus {
-  background: none;
-  border: none;
-  // color: #aecfe5;
-}
-
-.home-menu .user-image {
-  height: 3rem;
-  padding-right: 8px;
-}
-
-.content {
-  // background-color: skyblue;
-  margin-top: 65px;
-  height: 100vh;
-}
-
-@media (min-width: 48em) {
-  /* We increase the body font size */
-  body {
-    font-size: 16px;
+.page-countdown {
+  h1 {
+    font-weight: 900;
+    font-size: 14em;
+    margin: 0.5em;
   }
+}
 
-  /* We can align the menu header to the left, but float the
-  menu items to the right. */
-  .home-menu {
-    text-align: left;
+.page-game {
+  input[type='text'] {
+    font-size: 3em;
+    padding: 0.1em;
+    margin-bottom: 0.8em;
   }
-  .home-menu ul {
-    float: right;
+  .word-sent {
+    color: $color-orange-9;
+    font: 600 3em $font-display;
+    margin: -0.2em 0 0.2em 0;
+    text-shadow: 1px 1px 1px $color-darkest;
+  }
+  .word-submitted {
+    font-size: 5em;
+  }
+  .you-sent {
+    margin-top: 0;
+  }
+}
+
+// .page-joinGame {}
+// .page-login {}
+
+.page-main {
+  h1 {
+    margin-bottom: 1.5em;
+  }
+}
+
+.page-newGame {
+  .game-id {
+    background-color: $color-lightest;
+    border: 4px solid $color-darkest;
+    border-radius: 0.4em;
+    font: 600 3.5em $font-display;
+    margin: 0.8em 2em;
+    padding-bottom: 0.1em;
+  }
+}
+
+.page-winGame {
+  padding-bottom: 2em;
+
+  .converge-word {
+    color: $color-orange-9;
+    font: 400 5em $font-display;
+    margin: -0.2em 0 0.2em 0;
+    text-shadow: 1px 1px 1px $color-darkest;
+  }
+  button {
+    margin-top: 0.5em;
+  }
+  h2 {
+    font-size: 3em;
+  }
+  .words {
+    margin-top: 0;
+    h2 {
+      font-size: 2em;
+      text-decoration: underline;
+    }
+  }
+  .word-sent {
+    color: $color-orange-9;
+    font: 400 2em $font-display;
+    margin: -0.2em 0 0.2em 0;
+  }
+  .clear {
+    margin-bottom: 0.2em;
   }
 }
