@@ -3,7 +3,6 @@ import { checkToken, clearGame, setGameState } from './actions';
 import io from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import useSocketSetup from './hooks/useSocketSetup';
-import './App.scss';
 
 import CountdownPage from './components/pages/countdownPage';
 import GamePage from './components/pages/gamePage';
@@ -51,11 +50,11 @@ export default function App() {
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const gamePage = loggedIn ? pages[gameState] : <LoginPage></LoginPage>;
-  console.log('GAME STATE', gameState);
+
   return (
     <>
       <NavBar></NavBar>
-      <div className="content">{gamePage}</div>
+      <div className={`page-${gameState || 'login'}`}>{gamePage}</div>
     </>
   );
 }

@@ -6,8 +6,8 @@ export default function CountdownPage() {
 
   return (
     <div>
-      <h1>COUNTDOWN</h1>
-      <h2>Game starts in: {count}</h2>
+      <h1>{count}</h1>
+      <h2>Game Begins In...</h2>
     </div>
   );
 }

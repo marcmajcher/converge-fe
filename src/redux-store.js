@@ -51,6 +51,7 @@ function reducer(state = defaultStore, action) {
     case 'RESET_GAME':
       return {
         ...state,
+        gameState: 'countdown',
         countdown: undefined,
         words: undefined,
       };
